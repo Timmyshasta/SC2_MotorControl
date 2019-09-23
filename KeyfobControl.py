@@ -33,7 +33,7 @@ def Button_B():
         elif GPIO.input(B_Bttn) == GPIO.LOW:
             print("B_button is OFF")
         time.sleep(1)
-        
+        dd
 #Button C logic
 def Button_C(): 
     while True:
