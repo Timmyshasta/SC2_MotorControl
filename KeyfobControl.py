@@ -13,27 +13,28 @@ C_Bttn = 24 #Remote Button C
 D_Bttn = 25 #Remote Button D, Extra - not used for now
 
 GPIO.setup(A_Bttn,GPIO.IN, pull_up_down = GPIO.PUD_DOWN)
-GPIO.setup(B_Bttn,GPIO.IN, pull_up_down = GPIO.PUD_DOWN)
+GPIO.setup(B_Bttn,GPIO.IN,pull_up_down = GPIO.PUD_DOWN)
 GPIO.setup(C_Bttn,GPIO.IN, pull_up_down = GPIO.PUD_DOWN)
+
 
 #Button A logic 
 def Button_A(): 
     while True:
-        if GPIO.input(A_Bttn) == GPIO.HIGH:
+        if GPIO.input(A_Bttn) == True:
             print("A_button is ON")
-        elif GPIO.input(A_Bttn)  == GPIO.LOW:
+        elif GPIO.input(A_Bttn)  == False:
             print("A_button is OFF")
         time.sleep(1)
 
 #Button B logic
 def Button_B(): 
     while True:
-        if GPIO.input(B_Bttn) == GPIO.HIGH:
+        if GPIO.input(B_Bttn) == True:
             print("B_button is ON")
-        elif GPIO.input(B_Bttn) == GPIO.LOW:
+        elif GPIO.input(B_Bttn) == False:
             print("B_button is OFF")
         time.sleep(1)
-        dd
+        
 #Button C logic
 def Button_C(): 
     while True:
@@ -44,14 +45,17 @@ def Button_C():
         time.sleep(1)
 
 def main():
-    thread1 = threading.Thread(target= Button_A,args=())
-    thread1.setDaemon = True
-    thread1.start()
-    time.sleep(.5)
+##    thread1 = threading.Thread(target= Button_A,args=())
+##    thread1.setDaemon = True
+##    thread1.start()
+##    time.sleep(.5)
     thread2 = threading.Thread(target= Button_B,args=())
     thread2.setDaemon = True
     thread2.start()
-    
+    time.sleep(.5)
+    thread3 = threading.Thread(target= Button_B,args=())
+    thread3.setDaemon = True
+    thread3.start()
 if __name__ == '__main__':
     main()
 
