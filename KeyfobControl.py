@@ -1,71 +1,79 @@
-import RPi.GPIO as GPIO
-from smbus2 import SMBus, i2c_msg
+from gpiozero import LED, Button
+from signal import pause
 import time
-import threading
 
+door_open = None #Flag
+remote = None
 
-GPIO.setmode(GPIO.BCM)
-GPIO.setwarnings(False)
+class Remote_Keyfob():
+    def __init__(self):
+        self.A_Button = Button(18)   #Remote Button A
+        self.B_Button = Button(23)   #Remote Button B
+        self.C_Button = Button(24)   #Remote Button B
+        self.D_Button = Button(25)   #Remote Button B
 
-A_Bttn = 18 #Remote Button A
-B_Bttn = 23 #Remote Button B
-C_Bttn = 24 #Remote Button C
-D_Bttn = 25 #Remote Button D, Extra - not used for now
+        #Connect keyfob A button with Button_A function
+        self.A_Button.when_pressed = self.Button_A
 
-GPIO.setup(A_Bttn,GPIO.IN, pull_up_down = GPIO.PUD_DOWN)
-GPIO.setup(B_Bttn,GPIO.IN,pull_up_down = GPIO.PUD_DOWN)
-GPIO.setup(C_Bttn,GPIO.IN, pull_up_down = GPIO.PUD_DOWN)
-
-
-#Button A logic 
-def Button_A(): 
-    while True:
-        if GPIO.input(A_Bttn) == True:
-            print("A_button is ON")
-        elif GPIO.input(A_Bttn)  == False:
-            print("A_button is OFF")
-        time.sleep(1)
-
-#Button B logic
-def Button_B(): 
-    while True:
-        if GPIO.input(B_Bttn) == True:
-            print("B_button is ON")
-        elif GPIO.input(B_Bttn) == False:
-            print("B_button is OFF")
-        time.sleep(1)
+        #Connect keyfob B button with Button_A function
+        self.B_Button.when_pressed = self.Button_B
         
-#Button C logic
-def Button_C(): 
-    while True:
-        if GPIO.input(C_Bttn) == GPIO.HIGH:
-            print("B_button is ON")
-        elif GPIO.input(C_Bttn) == GPIO.LOW:
-            print("B_button is OFF")
-        time.sleep(1)
+        #Connect keyfob C button with Button_A function
+        self.C_Button.when_pressed = self.Button_C
+
+    
+    def Button_A(self):  
+        #### This is a place holder for function logic ######
+        #### when keyfob A button is pressed ################
+        
+        global door_open
+        
+        if door_open:
+            print("Now closing door A")
+            time.sleep(.5)
+            door_open = False
+        else:
+            print("Now opening door A")
+            door_open = True
+            
+    def Button_B(self):        
+        #### This is a place holder for function logic ######
+        #### when keyfob B button is pressed ################
+        
+        global door_open
+        
+        if door_open:
+            print("Now closing door B")
+            time.sleep(.5)
+            door_open = False
+        else:
+            print("Now opening door B")
+            door_open = True
+
+    def Button_C(self):        
+        #### This is a place holder for function logic ######
+        #### when keyfob C button is pressed ################
+        
+        global door_open
+        
+        if door_open:
+            print("Now closing door C")
+            time.sleep(.5)
+            door_open = False
+        else:
+            print("Now opening door C")
+            door_open = True         
+
 
 def main():
-##    thread1 = threading.Thread(target= Button_A,args=())
-##    thread1.setDaemon = True
-##    thread1.start()
-##    time.sleep(.5)
-    thread2 = threading.Thread(target= Button_B,args=())
-    thread2.setDaemon = True
-    thread2.start()
-    time.sleep(.5)
-    thread3 = threading.Thread(target= Button_B,args=())
-    thread3.setDaemon = True
-    thread3.start()
+    global door_open
+    global rem
+    door_open = True 
+    remote = Remote_Keyfob()
+    remote
+    while True:
+        pass
+
+        
 if __name__ == '__main__':
     main()
-
-
-
-
-
-
-
-
-            
-            
-        
